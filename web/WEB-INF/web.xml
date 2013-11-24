@@ -18,8 +18,8 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>struts.action.LoginServlet</servlet-class>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>struts.action.Login</servlet-class>
         <init-param>
             <param-name>Username</param-name>
             <param-value>Value</param-value>
@@ -29,13 +29,25 @@
             <param-value>Value</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>struts.action.AddUser</servlet-class>
+        <init-param>
+            <param-name>usernamesignup</param-name>
+            <param-value>Value</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/AddUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author zsx
  */
-public class LoginServlet extends HttpServlet {
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -32,48 +32,39 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        
-		HttpSession session = request.getSession();
-		String username = request.getParameter("username");  
-		String password = request.getParameter("password");  
-        
-        System.out.println("username: "+username);
-        System.out.println("password: "+password);
-        
+
+        HttpSession session = request.getSession();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
+
         DBMgr dbmr = new DBMgr();
-    	String[][] para = new String[][]{
-    		new String[]{"name", "'"+username+"'"},
-    		new String[]{"password", "'"+password+"'"},
-    	};    	
-    	boolean loginS = dbmr.lookup("account", para);
-        
-        if(loginS) {
+        String[][] para = new String[][]{
+            new String[]{"name", "'" + username + "'"},
+            new String[]{"password", "'" + password + "'"},};
+        boolean loginS = dbmr.lookup("account", para);
+
+        if (loginS) {
             session.setAttribute("username", username);
-        }
-        else {
-        //errorMessage = "Wrong password.";
-            getServletContext().getRequestDispatcher(
-								"/index.jsp").forward(request, response);
-        }
+            session.setAttribute("loginerrormsg", "");
+            System.out.println("login successful");
             
-  
-        
-//        response.setContentType("text/html;charset=UTF-8");
-//        PrintWriter out = response.getWriter();
-//        try {
-////            /* TODO output your page here. You may use following sample code. */
-////            out.println("<!DOCTYPE html>");
-////            out.println("<html>");
-////            out.println("<head>");
-////            out.println("<title>Servlet LoginServlet</title>");            
-////            out.println("</head>");
-////            out.println("<body>");
-////            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-////            out.println("</body>");
-////            out.println("</html>");
-//        } finally {            
-//            out.close();
-//        }
+            ShowAll sa = new ShowAll();
+            session.setAttribute("showAllLog", sa.showAllLog());
+            session.setAttribute("showAllUser", sa.showAllUser());
+            
+            getServletContext().getRequestDispatcher(
+                    "/panel.jsp").forward(request, response);
+        } else {
+            //errorMessage = "Wrong password.";
+            session.setAttribute("loginerrormsg", "Wrong password"); 
+            System.out.println("---Wrong password---");
+            getServletContext().getRequestDispatcher(
+                    "/index.jsp").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,8 +96,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
+
+
     }
 
     /**

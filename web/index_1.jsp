@@ -23,7 +23,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
-                            <form action="LoginServlet" method="post">
+                            <form action="Login" method="post">
 								
                                 <h1>Log in</h1> 
                                 <p> 

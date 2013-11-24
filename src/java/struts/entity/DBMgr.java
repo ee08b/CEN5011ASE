@@ -21,12 +21,39 @@ import javax.servlet.Servlet;
  * @author zsx
  */
 public class DBMgr {
+    private String dbConnectUsername = "root";
+    private String dbConnectPassword = "root";
+    
+    public ResultSet display(String table){
+        String strSq1 = "select * from "+table;
+        System.out.println(strSq1);
+
+        try {          
+			Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/library";  
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
+			
+			Statement st = con.createStatement();  
+			ResultSet rsLogon = st.executeQuery(strSq1);   
+						
+            System.out.println("display successful");
+			return rsLogon;   
+         }
+		catch(Exception e){
+			System.out.print("\n fail \n");
+            System.out.println(e.getMessage()); 
+            ResultSet rsempt = null;
+            return rsempt;
+		}
+    }
     public boolean lookup(String table, String[][] parameters){     
         String conditionString = "";
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
-                conditionString = (String) parameters[i][0] + "=" + parameters[i][1];
+                conditionString = (String) parameters[i][0] 
+                        + "=" + parameters[i][1];
             else 
                 conditionString += (String) " AND "+parameters[i][0] 
                 					+ "=" + parameters[i][1];
@@ -38,7 +65,8 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
 			ResultSet rsLogon = st.executeQuery(strSq1);   
@@ -65,7 +93,8 @@ public class DBMgr {
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
-                conditionString = (String) parameters[i][0] + "=" + parameters[i][1];
+                conditionString = (String) parameters[i][0] 
+                                    + "=" + parameters[i][1];
             else 
                 conditionString += (String) " AND "+parameters[i][0] 
                 					+ "=" + parameters[i][1];
@@ -77,7 +106,8 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
 			ResultSet rsLogon = st.executeQuery(strSq1);   
@@ -98,7 +128,8 @@ public class DBMgr {
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
-                conditionString = (String) parameters[i][0] + "=" + parameters[i][1];
+                conditionString = (String) parameters[i][0] 
+                                    + "=" + parameters[i][1];
             else 
                 conditionString += (String) " OR "+parameters[i][0] 
                 					+ " LIKE " + parameters[i][1];
@@ -110,7 +141,8 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
 			ResultSet rsLogon = st.executeQuery(strSq1);   
@@ -131,8 +163,14 @@ public class DBMgr {
         String valueString = "";
         
         for (int i=0; i<parameters.length; i++) {
-            parameterString += parameters[i][0] + ",";
-            valueString += parameters[i][1] + ",";
+            if (i==0) {
+                parameterString += parameters[i][0];
+                valueString += parameters[i][1];
+            }
+            else { 
+                parameterString += "," + parameters[i][0];
+                valueString += "," + parameters[i][1];
+            }
         }
         
         String strSq1 = "insert into " + table + " (" + parameterString 
@@ -142,10 +180,11 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
-			st.executeQuery(strSq1);   
+			st.executeUpdate(strSq1);   
 			System.out.println("add successful");
          }
 		catch(Exception e){
@@ -159,7 +198,8 @@ public class DBMgr {
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
-                conditionString = (String) parameters[i][0] + "=" + parameters[i][1];
+                conditionString = (String) parameters[i][0] 
+                                    + "=" + parameters[i][1];
             else 
                 conditionString += (String) " AND "+parameters[i][0] 
                 					+ "=" + parameters[i][1];
@@ -171,10 +211,11 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
-			st.executeQuery(strSq1);   
+			st.executeUpdate(strSq1);   
 			System.out.println("delete successful");
          }
 		catch(Exception e){
@@ -189,7 +230,8 @@ public class DBMgr {
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
-                conditionString = (String) parameters[i][0] + "=" + parameters[i][1];
+                conditionString = (String) parameters[i][0] 
+                                    + "=" + parameters[i][1];
             else 
                 conditionString += (String) " AND "+parameters[i][0] 
                 					+ "=" + parameters[i][1];
@@ -210,10 +252,11 @@ public class DBMgr {
         try {          
 			Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/library";  
-            Connection con = DriverManager.getConnection(url,"root","root"); 
+            Connection con = DriverManager.getConnection(
+                            url,dbConnectUsername,dbConnectPassword); 
 			
 			Statement st = con.createStatement();  
-			st.executeQuery(strSq1);   
+			st.executeUpdate(strSq1);   
 			System.out.println("update successful");
          }
 		catch(Exception e){
