@@ -54,6 +54,9 @@ public class Login extends HttpServlet {
             ShowAll sa = new ShowAll();
             session.setAttribute("showAllLog", sa.showAllLog());
             session.setAttribute("showAllUser", sa.showAllUser());
+            session.setAttribute("showAllRoomReserv", sa.showAllRoomReserv());
+            session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
+            session.setAttribute("showAllMaterial", sa.showAllMaterial());
             
             getServletContext().getRequestDispatcher(
                     "/panel.jsp").forward(request, response);

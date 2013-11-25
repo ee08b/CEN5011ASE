@@ -1,0 +1,80 @@
+.clear{
+	clear:both;
+}
+.ui-sortable{
+	background-color:#595959;
+	
+	color:#222222;
+	margin:0 15px 15px 0;
+	padding:0 10px 10px;
+}
+.ui-sortable h2{
+	 background-color:#707070;
+	 
+	 color:#FFFFD0;
+	 font-size:12px;
+	 margin:0 -10px 10px;
+	 line-height:2em;
+	 padding:0 10px;
+}
+dl.sort{
+	color:#222222;
+	margin:10px 0px;
+}
+dl.sort dt{
+	background-color:#EBEBEB;
+	color:#707070;
+	cursor:move;
+	height:2em; line-height:2em;
+	padding:0px 6px;
+	position:relative;
+}
+dl.sort dd{
+	background-color:#FFFFD8;
+	margin:0px;
+	padding:3px 6px;
+	border-bottom:1px dotted #999999;
+	border-left:1px dotted #999999;
+	border-right:1px dotted #999999;
+}
+span.options{
+	cursor:pointer; 
+	position:absolute; 
+}
+.ui-sortable h2 span.options {
+	right:8px; 
+	top:8px;
+}
+dl.sort dt span.options {
+	right:6px; 
+	top:5px;
+}
+#container{
+	float:left;
+}
+#header{
+	width:97%;
+	margin-right: 10%;
+}
+#content{
+	float:left; 
+	width:100%;
+}
+#sidebar{
+	float:left; 
+	width:200px;
+}
+#footer{
+	width:638px;
+}
+#trashcan{
+	float:left;
+	width:170px; 
+	height:100px; 
+	background-color:#66ffff;
+ /*	visibility:hidden; */
+	visibility:visible;
+}
+#trashcan p{
+	margin:0px;
+}
