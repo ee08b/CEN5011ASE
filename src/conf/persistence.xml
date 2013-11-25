@@ -8,6 +8,10 @@
     <class>com.app.struts.entity.Material</class>
     <class>struts.entity.User</class>
     <class>struts.entity.DBMgr</class>
+    <class>struts.DBentity.Material</class>
+    <class>struts.DBentity.Account</class>
+    <class>struts.DBentity.Log</class>
+    <class>struts.DBentity.RoomRsv</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull"/>
