@@ -49,9 +49,9 @@ public class ShowAll {
         try {
             String tmp = "";
             while (rsLogon.next()){
-                tmp += "<dl class=\"sort\"><dt><table border=0 width=100><tr>";
-                tmp += "<td>"+rsLogon.getString("name")+"<td>"+
-                       "<td>"+rsLogon.getString("password")+"<td>"+
+                tmp += "<dl class=\"sort\"><dt><table border=0 width=\"100%\"><tr>";
+                tmp += "<td width=\"300px\">"+rsLogon.getString("name")+"<td>"+
+                       "<td width=\"300px\">"+rsLogon.getString("password")+"<td>"+
                        "<td>"+rsLogon.getString("role")+"<td>";
                 tmp += "</tr></table></dt></dl>";
             }
