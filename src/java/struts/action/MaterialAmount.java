@@ -3,12 +3,10 @@
  * and open the template in the editor.
  */
 package struts.action;
-
-import java.util.*;
-import java.text.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +19,8 @@ import struts.entity.DBMgr;
  *
  * @author zsx
  */
-@WebServlet(name = "BorrowMaterial", urlPatterns = {"/BorrowMaterial"})
-public class BorrowMaterial extends HttpServlet {
+@WebServlet(name = "MaterialAmount", urlPatterns = {"/MaterialAmount"})
+public class MaterialAmount extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -38,40 +36,42 @@ public class BorrowMaterial extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         HttpSession session = request.getSession();
-		String name = request.getParameter("name");        
-        //System.out.println("id: "+id);
-        
-    	DBMgr dbmr = new DBMgr();
+		String id = request.getParameter("id");
+        String type = request.getParameter("type");
+        String results;                    
+
+        DBMgr dbmr = new DBMgr();
         String[][] para0 = new String[][]{
-    		new String[]{"name", "'"+name+"'"}
-        };
-        String results = "available = available - 1";
-        ResultSet rsLogon = dbmr.search("material", para0);
-        
-        ResultSet rsLogon1 = dbmr.search("material_rsv", para0);
-        //rsLogon.next();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    		new String[]{"id", "'"+id+"'"},
+        };        
         
         try{
-            if(rsLogon.next() && !rsLogon1.next() && rsLogon.getInt("available") > 0) {
-                String[][] para1 = new String[][]{
-                    new String[]{"name", "'"+name+"'"},
-                };
-                dbmr.update("material", para1, results);                
+            if(type.equals("increase")){
+                results = "amount = amount + 1";
+                dbmr.update("material", para0, results);
+                System.out.println("increase material "+id+" successful");
+            } else if(type.equals("reduce")){
+                ResultSet rsLogon = dbmr.search("material", para0);
                 
-                String[][] para = new String[][]{
-                    new String[]{"name", "'"+name+"'"},
-                    new String[]{"user", "'"+(String) session.getAttribute("username")+"'"},
-                    new String[]{"date","'"+dateFormat.format(new Date())+"'"},
-                    new String[]{"time","'"+timeFormat.format(new Date())+"'"},
-                };
+                String[][] para1;
+                if(rsLogon.next()) {
+                    para1 = new String[][]{
+                            new String[]{"name", "'"+rsLogon.getString("name")+"'"},
+                        };
 
-                dbmr.add("material_rsv", para);
-                System.out.println("borrow material "+name+" successful");
-            } else {
-                
+                    ResultSet rsLogon1 = dbmr.search("material_rsv", para1);      
+
+                    if(!rsLogon1.next() && rsLogon.next() &&  rsLogon.getInt("amount") == 0){
+                        dbmr.delete("material", para0);
+                        System.out.println("delete material "+id+" successful");
+                    } else {
+                        results = "amount = amount - 1";
+                        dbmr.update("material", para0, results);
+                        System.out.println("reduce material "+id+" successful");
+                    }
+                }
             }
         }
         catch(Exception e){
@@ -82,9 +82,8 @@ public class BorrowMaterial extends HttpServlet {
 		finally { 
 		}
         
-
         ShowAll sa = new ShowAll();
-        session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
+        session.setAttribute("showAllMaterial", sa.showAllMaterial());
         getServletContext().getRequestDispatcher(
                 "/panel.jsp").forward(request, response);
     }

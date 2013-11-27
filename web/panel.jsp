@@ -85,16 +85,22 @@
 	<div id="Material_Rserv" class="groupItem">
 		<div style="-moz-user-select: none;" class="itemHeader">Material reservation<a href="#" class="closeEl">[-]</a></div>
 		<div class="itemContent">
-            <form action="/Library/AddMaterial" method="post">
+            <form action="/Library/SearchMaterial" method="post">
                 <input id="materialSearch" name="materialSearch" type="text" placeholder="material name" />
                 <input id="authorSearch" name="authorSearch" type="text" placeholder="author" />
                 <input id="typeSearch" name="typeSearch" type="text" placeholder="type" />
                 <input id="ISBNSearch" name="ISBNSearch" type="text" placeholder="ISBN" />
                 <input id="numberSearch" name="numberSearch" type="text" placeholder="number" />
 
-                <input type="submit" value="Borrow"/>
+                <input type="submit" value="Search"/>
             </form>
+            <%String searchMaterial = (String) session.getAttribute("searchMaterial");%> 
+           <!--  <%if(searchMaterial==null) {searchMaterial="No result found.";} %> -->
+            <%=searchMaterial %>
+            <br><br>
+            <div><b>Borrowed Materials</b></div>
             <%String showAllMaterialOut = (String) session.getAttribute("showAllMaterialOut");%> 
+            <%if(showAllMaterialOut==null) {showAllMaterialOut="No materials borrowed yet. ";} %>
             <%=showAllMaterialOut %>
 		</div>
 	</div>

@@ -4,11 +4,8 @@
  */
 package struts.action;
 
-import java.util.*;
-import java.text.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +18,8 @@ import struts.entity.DBMgr;
  *
  * @author zsx
  */
-@WebServlet(name = "BorrowMaterial", urlPatterns = {"/BorrowMaterial"})
-public class BorrowMaterial extends HttpServlet {
+@WebServlet(name = "ReturnMaterial", urlPatterns = {"/ReturnMaterial"})
+public class ReturnMaterial extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -37,54 +34,25 @@ public class BorrowMaterial extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();        
         HttpSession session = request.getSession();
-		String name = request.getParameter("name");        
-        //System.out.println("id: "+id);
+		String name = request.getParameter("name");
+        
+        System.out.println("name: "+name);
         
     	DBMgr dbmr = new DBMgr();
         String[][] para0 = new String[][]{
     		new String[]{"name", "'"+name+"'"}
         };
-        String results = "available = available - 1";
-        ResultSet rsLogon = dbmr.search("material", para0);
+        String results = "available = available + 1";
         
-        ResultSet rsLogon1 = dbmr.search("material_rsv", para0);
-        //rsLogon.next();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        
-        try{
-            if(rsLogon.next() && !rsLogon1.next() && rsLogon.getInt("available") > 0) {
-                String[][] para1 = new String[][]{
-                    new String[]{"name", "'"+name+"'"},
-                };
-                dbmr.update("material", para1, results);                
-                
-                String[][] para = new String[][]{
-                    new String[]{"name", "'"+name+"'"},
-                    new String[]{"user", "'"+(String) session.getAttribute("username")+"'"},
-                    new String[]{"date","'"+dateFormat.format(new Date())+"'"},
-                    new String[]{"time","'"+timeFormat.format(new Date())+"'"},
-                };
-
-                dbmr.add("material_rsv", para);
-                System.out.println("borrow material "+name+" successful");
-            } else {
-                
-            }
-        }
-        catch(Exception e){
-			System.out.print("\n fail \n");
-			e.printStackTrace();
-            System.out.println(e.getMessage()); 
-		}
-		finally { 
-		}
-        
+        dbmr.delete("material_rsv", para0);
+        dbmr.update("material", para0, results);
+        System.out.println("return material "+name+" successful");
 
         ShowAll sa = new ShowAll();
         session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
+        session.setAttribute("showAllMaterial", sa.showAllMaterial());
         getServletContext().getRequestDispatcher(
                 "/panel.jsp").forward(request, response);
     }

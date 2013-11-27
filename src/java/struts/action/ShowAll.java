@@ -129,15 +129,20 @@ public class ShowAll {
                     + "<td>date</td>"
                     + "<td>time</td>"
                     + "</tr>";
-            while (rsLogon.next()){
-                tmp += "<tr>";
-                tmp += "<td>"+rsLogon.getString("name")+"</td>"+
-                       "<td>"+rsLogon.getString("user")+"</td>"+
-                       "<td>"+rsLogon.getDate("date")+"</td>"+
-                       "<td>"+rsLogon.getTime("time")+"</td>";
-                tmp += "</tr>";
-            }
-            tmp += "</table>";
+//            if(rsLogon.first()) {
+                while (rsLogon.next()) {
+                    tmp += "<tr ondblclick=\"dbclickReturnMaterial(\'"
+                            + rsLogon.getString("name")+"\')\">"
+                            + "<td>" + rsLogon.getString("name") + "</td>"
+                            + "<td>" + rsLogon.getString("user") + "</td>"
+                            + "<td>" + rsLogon.getDate("date") + "</td>"
+                            + "<td>" + rsLogon.getTime("time") + "</td>";
+                    tmp += "</tr>";
+                }
+                tmp += "</table>";
+//            } else {
+//                tmp = "No materials borrowed yet. ";
+//            }
             return tmp;
         }		
 		catch(Exception e){
@@ -160,14 +165,21 @@ public class ShowAll {
                     + "<td>type</td>"
                     + "<td>ISBN</td>"
                     + "<td>available</td>"
+                    + "<td>amount</td>"
                     + "</tr>";
             while (rsLogon.next()){
-                tmp += "<tr>";
-                tmp += "<td>"+rsLogon.getString("name")+"</td>"+
+                String tmp0 = "<tr ondblclick=\"dbclickReduceMaterial(\'" 
+                        + rsLogon.getString("id")+"\')\" " 
+                        + "onclick=\"onClickIncreaseMaterial(\'"
+                        + rsLogon.getString("id")+"\')\" >";
+                System.out.println(tmp0);
+                tmp += tmp0 +
+                       "<td>"+rsLogon.getString("name")+"</td>"+
                        "<td>"+rsLogon.getString("author")+"</td>"+
                        "<td>"+rsLogon.getString("type")+"</td>"+
                        "<td>"+rsLogon.getString("ISBN")+"</td>"+
-                       "<td>"+rsLogon.getInt("available")+"</td>";
+                       "<td>"+rsLogon.getString("available")+"</td>"+
+                       "<td>"+rsLogon.getInt("amount")+"</td>";
                 tmp += "</tr>";
             }
             tmp += "</table>";          

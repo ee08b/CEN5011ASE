@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package struts.entity;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,7 +13,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.Servlet;
-
 //import com.app.struts.action.*;
 /**
  *
@@ -129,10 +127,10 @@ public class DBMgr {
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
                 conditionString = (String) parameters[i][0] 
-                                    + "=" + parameters[i][1];
+                                    + " LIKE '%" + parameters[i][1] + "%'";
             else 
-                conditionString += (String) " OR "+parameters[i][0] 
-                					+ " LIKE " + parameters[i][1];
+                conditionString += (String) " AND "+parameters[i][0] 
+                					+ " LIKE '%" + parameters[i][1] + "%'";
         }
         
         String strSq1 = "select * from "+table+" where " + conditionString;
@@ -224,9 +222,9 @@ public class DBMgr {
 		}
     }
         
-    public void update(String table, String[][] parameters, String[][] results){
+    public void update(String table, String[][] parameters, String resultString){
         String conditionString = "";
-        String resultString = "";
+//        String resultString = "";
         
         for (int i=0; i<parameters.length; i++) {
             if (i==0)
@@ -237,13 +235,13 @@ public class DBMgr {
                 					+ "=" + parameters[i][1];
         }
         
-        for (int i=0; i<results.length; i++) {
-            if (i==0)
-                resultString = (String) results[i][0] + "=" + results[i][1];
-            else 
-                resultString += (String) " , "+results[i][0] 
-                					+ "=" + results[i][1];
-        }
+//        for (int i=0; i<results.length; i++) {
+//            if (i==0)
+//                resultString = (String) results[i][0] + "=" + results[i][1];
+//            else 
+//                resultString += (String) " , "+results[i][0] 
+//                					+ "=" + results[i][1];
+//        }
         
         String strSq1 = "update " + table + " set " + resultString 
                         +" where " + conditionString;
