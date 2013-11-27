@@ -172,7 +172,7 @@ public class ShowAll {
                         + rsLogon.getString("id")+"\')\" " 
                         + "onclick=\"onClickIncreaseMaterial(\'"
                         + rsLogon.getString("id")+"\')\" >";
-                System.out.println(tmp0);
+//                System.out.println(tmp0);
                 tmp += tmp0 +
                        "<td>"+rsLogon.getString("name")+"</td>"+
                        "<td>"+rsLogon.getString("author")+"</td>"+

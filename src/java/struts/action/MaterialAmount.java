@@ -46,32 +46,44 @@ public class MaterialAmount extends HttpServlet {
         String[][] para0 = new String[][]{
     		new String[]{"id", "'"+id+"'"},
         };        
-        
+        ResultSet rsLogon;
         try{
             if(type.equals("increase")){
                 results = "amount = amount + 1";
                 dbmr.update("material", para0, results);
                 System.out.println("increase material "+id+" successful");
             } else if(type.equals("reduce")){
-                ResultSet rsLogon = dbmr.search("material", para0);
-                
-                String[][] para1;
-                if(rsLogon.next()) {
-                    para1 = new String[][]{
-                            new String[]{"name", "'"+rsLogon.getString("name")+"'"},
-                        };
-
-                    ResultSet rsLogon1 = dbmr.search("material_rsv", para1);      
-
-                    if(!rsLogon1.next() && rsLogon.next() &&  rsLogon.getInt("amount") == 0){
-                        dbmr.delete("material", para0);
-                        System.out.println("delete material "+id+" successful");
-                    } else {
-                        results = "amount = amount - 1";
-                        dbmr.update("material", para0, results);
-                        System.out.println("reduce material "+id+" successful");
-                    }
-                }
+//                rsLogon = dbmr.search("material", para0);
+//                
+//                String[][] para1;
+//                if(rsLogon.next()) {
+//                    System.out.println("material id="+id+" name="+rsLogon.getString("name")+" found "
+//                            + rsLogon.getInt("amount") +" left. ");
+//                    
+//                    para1 = new String[][]{
+//                            new String[]{"name", "'"+rsLogon.getString("name")+"'"},
+//                        };
+//
+//                    ResultSet rsLogon1 = dbmr.search("material_rsv", para1);
+//                    if(rsLogon1.next()) {  
+//                        System.out.println("material "+id+" has "+rsLogon.getInt("amount")+" left. ");
+//                        
+//                        if(!rsLogon1.next() && rsLogon.getInt("amount") <= 0) {
+//                            dbmr.delete("material", para0);
+//                            System.out.println("material "+id+" delete successful");
+//                        } else {
+                            results = "amount = amount - 1";
+                            dbmr.update("material", para0, results);
+                            
+                            rsLogon = dbmr.search("material", para0);
+                            if(rsLogon.next() && rsLogon.getInt("amount") < 0) {
+                                dbmr.delete("material", para0);
+                            }
+//                            System.out.println("material "+id+" has "+rsLogon.getInt("amount")
+//                                                +", reduced successful");
+//                        }
+//                    }
+//                }
             }
         }
         catch(Exception e){

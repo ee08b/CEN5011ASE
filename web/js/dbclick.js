@@ -56,7 +56,7 @@ function dbclickReduceMaterial(id)
     var action = "MaterialAmount?id=" + id
                  + "&type=reduce";
     tmp.action = action;
-    alert("action: " + action);
+    
     tmp.method = "post";
     document.body.appendChild(tmp);
     tmp.submit();  
@@ -70,7 +70,7 @@ function onClickIncreaseMaterial(id)
         var action = "MaterialAmount?id=" + id
                      + "&type=increase";
         tmp.action = action;
-        alert("action: " + action);
+        
         tmp.method = "post";
         document.body.appendChild(tmp);
         tmp.submit();    
