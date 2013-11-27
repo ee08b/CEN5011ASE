@@ -18,8 +18,9 @@ import struts.entity.DBMgr;
  *
  * @author zsx
  */
-@WebServlet(name = "AddUser", urlPatterns = {"Library/AddUser"})
-public class AddUser extends HttpServlet {
+@WebServlet(name = "BorrowMaterial", urlPatterns = {"/BorrowMaterial"})
+public class BorrowMaterial extends HttpServlet {
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -34,7 +35,6 @@ public class AddUser extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
         HttpSession session = request.getSession();
 		String usernamesignup = request.getParameter("usernamesignup");  
 		String passwordsignup = request.getParameter("passwordsignup");  

@@ -18,8 +18,9 @@ import struts.entity.DBMgr;
  *
  * @author zsx
  */
-@WebServlet(name = "AddUser", urlPatterns = {"Library/AddUser"})
-public class AddUser extends HttpServlet {
+@WebServlet(name = "DeleteUser", urlPatterns = {"Library/DeleteUser"})
+public class DeleteUser extends HttpServlet {
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -36,44 +37,26 @@ public class AddUser extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         HttpSession session = request.getSession();
-		String usernamesignup = request.getParameter("usernamesignup");  
-		String passwordsignup = request.getParameter("passwordsignup");  
-        String rolesignup = request.getParameter("rolesignup");  
+		String id = request.getParameter("id");
         
-        System.out.println("usernamesignup: "+usernamesignup);
-        System.out.println("passwordsignup: "+passwordsignup);
-        System.out.println("rolesignup: "+rolesignup);
+        System.out.println("id: "+id);
         
     	DBMgr dbmr = new DBMgr();
         String[][] para0 = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"}
+    		new String[]{"id", "'"+id+"'"}
         };
-        boolean alreadyExists = dbmr.lookup("account", para0);
 
         String[][] para = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"},
-    		new String[]{"password", "'"+passwordsignup+"'"},
-            new String[]{"role", "'"+rolesignup+"'"},
+    		new String[]{"id", "'"+id+"'"},
     	};
-        if (alreadyExists) {
-            //errorMessage = "user already exists.";
-            session.setAttribute("addusererrormsg", "user already exists");
-            System.out.println("---user already exists---");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
-        } else {
-            dbmr.add("account", para);
-            session.setAttribute("addusererrormsg", "");
-            System.out.println("add user successful");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
-        }
+        
+        dbmr.delete("account", para);
+        System.out.println("delete user successful");
+
+        ShowAll sa = new ShowAll();
+        session.setAttribute("showAllUser", sa.showAllUser());
+        getServletContext().getRequestDispatcher(
+                "/panel.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
