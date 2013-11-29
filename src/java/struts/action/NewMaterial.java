@@ -16,8 +16,8 @@ import struts.entity.DBMgr;
  *
  * @author zsx
  */
-@WebServlet(name = "AddUser", urlPatterns = {"Library/AddUser"})
-public class AddUser extends HttpServlet {
+@WebServlet(name = "NewMaterial", urlPatterns = {"/NewMaterial"})
+public class NewMaterial extends HttpServlet {
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -32,48 +32,68 @@ public class AddUser extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
         HttpSession session = request.getSession();
-		String usernamesignup = request.getParameter("usernamesignup");  
-		String passwordsignup = request.getParameter("passwordsignup");  
-        String rolesignup = request.getParameter("rolesignup");  
+		String materialsignup = request.getParameter("materialsignup");  
+		String authorsignup = request.getParameter("authorsignup");  
+        String typesignup = request.getParameter("typesignup");  
+		String ISBNsignup = request.getParameter("ISBNsignup"); 
+        String numbersignup = request.getParameter("numbersignup");  
         
-        System.out.println("usernamesignup: "+usernamesignup);
-        System.out.println("passwordsignup: "+passwordsignup);
-        System.out.println("rolesignup: "+rolesignup);
+        System.out.println("materialsignup: "+materialsignup);
+        System.out.println("authorsignup: "+authorsignup);
+        System.out.println("typesignup: "+typesignup);
+        System.out.println("ISBNsignup: "+ISBNsignup);
+        System.out.println("numbersignup: "+numbersignup);
         
     	DBMgr dbmr = new DBMgr();
         String[][] para0 = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"}
+    		new String[]{"name", "'"+materialsignup+"'"}
         };
-        boolean alreadyExists = dbmr.lookup("account", para0);
-
+        boolean alreadyExists = dbmr.lookup("material", para0);
+        
+        boolean amountIsInt = isInteger(numbersignup);
+        boolean ISBNIsInt = isInteger(ISBNsignup);
+        System.out.println("amount is int:"+amountIsInt+"; ISBN is int:"+ISBNIsInt);
+        
         String[][] para = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"},
-    		new String[]{"password", "'"+passwordsignup+"'"},
-            new String[]{"role", "'"+rolesignup+"'"},
+    		new String[]{"name", "'"+materialsignup+"'"},
+    		new String[]{"author", "'"+authorsignup+"'"},
+            new String[]{"type", "'"+typesignup+"'"},
+            new String[]{"ISBN", "'"+ISBNsignup+"'"},
+            new String[]{"available", "'"+numbersignup+"'"},
+            new String[]{"amount", "'"+numbersignup+"'"},
     	};
+        if(!amountIsInt) {
+            session.setAttribute("addmaterialerrormsg", "amount is not an integer");
+        } else
+        if(!ISBNIsInt) {
+            session.setAttribute("addmaterialerrormsg", "ISBN is not an integer");
+        } else
         if (alreadyExists) {
-            //errorMessage = "user already exists.";
-            session.setAttribute("addusererrormsg", "user already exists");
-            System.out.println("---user already exists---");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
+            //errorMessage = "user already exists.";            
+            session.setAttribute("addmaterialerrormsg", "material already exists");
+            System.out.println("---material already exists---");
         } else {
-            dbmr.add("account", para);
+            dbmr.add("material", para);
             session.setAttribute("addusererrormsg", "");
-            System.out.println("add user successful");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
+            System.out.println("add material successful");         
         }
+        ShowAll sa = new ShowAll();
+        session.setAttribute("showAllMaterial", sa.showAllMaterial());
+        getServletContext().getRequestDispatcher(
+                    "/panel.jsp").forward(request, response);
     }
-
+    
+    public static boolean isInteger(String s) {
+        try {  
+            System.out.println("convert to int"+Integer.parseInt(s)); 
+        }  
+        catch(NumberFormatException nfe) {  
+            return false;  
+        }  
+        return true;  
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

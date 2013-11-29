@@ -10,14 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import struts.entity.DBMgr;
 /**
  *
  * @author zsx
  */
-@WebServlet(name = "AddUser", urlPatterns = {"Library/AddUser"})
-public class AddUser extends HttpServlet {
+@WebServlet(name = "AddRoomRsv", urlPatterns = {"/AddRoomRsv"})
+public class AddRoomRsv extends HttpServlet {
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -32,45 +31,19 @@ public class AddUser extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        HttpSession session = request.getSession();
-		String usernamesignup = request.getParameter("usernamesignup");  
-		String passwordsignup = request.getParameter("passwordsignup");  
-        String rolesignup = request.getParameter("rolesignup");  
-        
-        System.out.println("usernamesignup: "+usernamesignup);
-        System.out.println("passwordsignup: "+passwordsignup);
-        System.out.println("rolesignup: "+rolesignup);
-        
-    	DBMgr dbmr = new DBMgr();
-        String[][] para0 = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"}
-        };
-        boolean alreadyExists = dbmr.lookup("account", para0);
-
-        String[][] para = new String[][]{
-    		new String[]{"name", "'"+usernamesignup+"'"},
-    		new String[]{"password", "'"+passwordsignup+"'"},
-            new String[]{"role", "'"+rolesignup+"'"},
-    	};
-        if (alreadyExists) {
-            //errorMessage = "user already exists.";
-            session.setAttribute("addusererrormsg", "user already exists");
-            System.out.println("---user already exists---");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
-        } else {
-            dbmr.add("account", para);
-            session.setAttribute("addusererrormsg", "");
-            System.out.println("add user successful");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllUser", sa.showAllUser());
-            getServletContext().getRequestDispatcher(
-                    "/panel.jsp").forward(request, response);
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddRoomRsv</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AddRoomRsv at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {            
+            out.close();
         }
     }
 

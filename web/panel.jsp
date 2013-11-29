@@ -107,12 +107,12 @@
 	<div id="Material" class="groupItem">
 		<div style="-moz-user-select: none;" class="itemHeader">Material<a href="#" class="closeEl">[-]</a></div>
 		<div class="itemContent">
-            <form action="/Library/AddMaterial" method="post">
+            <form action="/Library/NewMaterial" method="post">
                 <input id="materialsignup" name="materialsignup" required="required" type="text" placeholder="new material" />
                 <input id="authorsignup" name="authorsignup" required="required" type="text" placeholder="author" />
                 <input id="typesignup" name="typesignup" required="required" type="text" placeholder="type" />
                 <input id="ISBNsignup" name="ISBNsignup" required="required" type="text" placeholder="ISBN" />
-                <input id="numbersignup" name="amountsignup" required="required" type="text" placeholder="amount" />
+                <input id="numbersignup" name="numbersignup" required="required" type="text" placeholder="amount" />
 
                 <input type="submit" value="Add Material"/>
             </form>

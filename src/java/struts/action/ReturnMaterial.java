@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package struts.action;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import struts.entity.DBMgr;
-
 /**
  *
  * @author zsx
  */
 @WebServlet(name = "ReturnMaterial", urlPatterns = {"/ReturnMaterial"})
 public class ReturnMaterial extends HttpServlet {
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and

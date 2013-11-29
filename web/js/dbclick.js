@@ -31,7 +31,7 @@ function dbclickBorrowMaterial(name)
     var tmp = document.createElement("form");
     var action = "BorrowMaterial?name=" + name;
     tmp.action = action;
-    alert("action: " + action);
+ //   alert("action: " + action);
     tmp.method = "post";
     document.body.appendChild(tmp);
     tmp.submit();  

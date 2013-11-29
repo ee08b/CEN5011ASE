@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package struts.action;
-
 import java.util.*;
 import java.text.*;
 import java.io.IOException;
@@ -16,14 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import struts.entity.DBMgr;
-
 /**
  *
  * @author zsx
  */
 @WebServlet(name = "BorrowMaterial", urlPatterns = {"/BorrowMaterial"})
 public class BorrowMaterial extends HttpServlet {
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -84,6 +81,7 @@ public class BorrowMaterial extends HttpServlet {
         
 
         ShowAll sa = new ShowAll();
+        session.setAttribute("showAllMaterial", sa.showAllMaterial());
         session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
         getServletContext().getRequestDispatcher(
                 "/panel.jsp").forward(request, response);
