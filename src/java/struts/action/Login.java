@@ -7,6 +7,7 @@ package struts.action;
 import struts.entity.DBMgr;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,31 +45,45 @@ public class Login extends HttpServlet {
         String[][] para = new String[][]{
             new String[]{"name", "'" + username + "'"},
             new String[]{"password", "'" + password + "'"},};
-        boolean loginS = dbmr.lookup("account", para);
+        ResultSet loginS = dbmr.search("account", para);
+        
+        try {
+            if (loginS.next()) {
+                session.setAttribute("username", username);
+                session.setAttribute("role", loginS.getString("role"));
+                session.setAttribute("loginerrormsg", "");
+                System.out.println("login successful");
 
-        if (loginS) {
-            session.setAttribute("username", username);
-            session.setAttribute("loginerrormsg", "");
-            System.out.println("login successful");
-            
-            ShowAll sa = new ShowAll();
-            session.setAttribute("showAllLog", sa.showAllLog());
-            session.setAttribute("showAllUser", sa.showAllUser());
-            session.setAttribute("showAllRoomReserv", sa.showAllRoomReserv());
-            session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
-            session.setAttribute("showAllMaterial", sa.showAllMaterial());
-            session.setAttribute("searchMaterial", "No result found.");
-            
-            getServletContext().getRequestDispatcher(
+                ShowAll sa = new ShowAll();
+                session.setAttribute("showAllLog", sa.showAllLog());
+                session.setAttribute("showAllUser", sa.showAllUser());
+                session.setAttribute("showAllRoomReserv", sa.showAllRoomReserv());
+                session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut(
+                                    (String)session.getAttribute("username")));
+                session.setAttribute("showAllMaterial", sa.showAllMaterial());
+                session.setAttribute("searchMaterial", "No result found.");       
+                
+                getServletContext().getRequestDispatcher(
                     "/panel.jsp").forward(request, response);
-        } else {
-            //errorMessage = "Wrong password.";
-            session.setAttribute("loginerrormsg", "Wrong password"); 
-            System.out.println("---Wrong password---");
+            } else {
+                //errorMessage = "Wrong password.";
+                session.setAttribute("loginerrormsg", "Wrong password");
+                System.out.println("---Wrong password---");
+                
+                getServletContext().getRequestDispatcher(
+                    "/index.jsp").forward(request, response);
+            }
+        }
+        catch(Exception e){
+			System.out.print("\n fail \n");
+			e.printStackTrace();
+            System.out.println(e.getMessage()); 
+            
             getServletContext().getRequestDispatcher(
                     "/index.jsp").forward(request, response);
-        }
-
+		}
+		finally { 
+		}   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

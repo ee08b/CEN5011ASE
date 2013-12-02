@@ -16,7 +16,7 @@
 	<body>
         <div class="container">
             <header>
-                <h1>Self-service <span>Library</span></h1>
+                <h1>Online FIU <span>Library</span></h1>
             </header>
             <section>				
                 <div id="container_demo" >

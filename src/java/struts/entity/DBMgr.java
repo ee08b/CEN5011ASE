@@ -121,6 +121,30 @@ public class DBMgr {
 		}
     }
     
+    public ResultSet searchCustom(String table, String condition){
+        String strSq1 = "select * from "+table+" where " + condition;
+        System.out.println(strSq1);
+
+        try {          
+			Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/library";  
+            Connection con = DriverManager.getConnection(
+                                url,dbConnectUsername,dbConnectPassword); 
+			
+			Statement st = con.createStatement();  
+			ResultSet rsLogon = st.executeQuery(strSq1);   
+			
+            System.out.println("searchCustom successful");
+			return rsLogon;
+         }
+		catch(Exception e){
+			System.out.print("\n fail \n");
+            System.out.println(e.getMessage()); 
+            ResultSet rsempt = null;
+            return rsempt;
+		}
+    }
+    
     public ResultSet vagueSearch(String table, String[][] parameters){
         String conditionString = "";
         

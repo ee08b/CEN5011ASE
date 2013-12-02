@@ -46,10 +46,15 @@ public class ReturnMaterial extends HttpServlet {
         dbmr.delete("material_rsv", para0);
         dbmr.update("material", para0, results);
         System.out.println("return material "+name+" successful");
-
+        
+        AddHistory addhis = new AddHistory();
+        addhis.addRecord((String) session.getAttribute("username"), name, "material", "return");
+        System.out.println("log return material "+name+" successful");
+                
         ShowAll sa = new ShowAll();
-        session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut());
+        session.setAttribute("showAllMaterialOut", sa.showAllMaterialOut((String)session.getAttribute("username")));
         session.setAttribute("showAllMaterial", sa.showAllMaterial());
+        session.setAttribute("showAllLog", sa.showAllLog());
         getServletContext().getRequestDispatcher(
                 "/panel.jsp").forward(request, response);
     }

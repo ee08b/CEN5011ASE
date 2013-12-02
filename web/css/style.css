@@ -1,4 +1,6 @@
 /* remove codrops styles and reset the whole thing */
+tr:hover {background-color: yellow;}
+
 #container_demo{
 	 text-align: left;
 	 margin: 0;

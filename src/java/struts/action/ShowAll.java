@@ -6,6 +6,9 @@ package struts.action;
 
 import java.sql.ResultSet;
 import struts.entity.DBMgr;
+import java.util.*;
+import java.text.*;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -16,7 +19,7 @@ public class ShowAll {
         this.showAllLog();
         this.showAllUser();
         this.showAllRoomReserv();
-        this.showAllMaterialOut();
+//        this.showAllMaterialOut();
         this.showAllMaterial();
     }
     public String showAllLog(){
@@ -98,6 +101,11 @@ public class ShowAll {
                     + "<td>to</td>"
                     + "</tr>";
             while (rsLogon.next()){
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                
+//                if(!dateFormat.format(new Date()).before(dateFormat.parse(rsLogon.getDate("date"))) &&
+//                        rsLogon.getTime("time2") >= timeFormat.format(new Date())
                 tmp += "<tr>"+
                        "<td>"+rsLogon.getString("room")+"</td>"+
                        "<td>"+rsLogon.getString("user")+"</td>"+
@@ -119,9 +127,10 @@ public class ShowAll {
 		}
     }
         
-    public String showAllMaterialOut (){
+    public String showAllMaterialOut (String username){
         DBMgr dbmr = new DBMgr();    	
     	ResultSet rsLogon = dbmr.display("material_rsv");
+        
         try {
             String tmp = "<table border=0 width=100%><tr>"
                     + "<td>name</td>"
@@ -131,13 +140,15 @@ public class ShowAll {
                     + "</tr>";
 //            if(rsLogon.first()) {
                 while (rsLogon.next()) {
-                    tmp += "<tr ondblclick=\"dbclickReturnMaterial(\'"
-                            + rsLogon.getString("name")+"\')\">"
-                            + "<td>" + rsLogon.getString("name") + "</td>"
-                            + "<td>" + rsLogon.getString("user") + "</td>"
-                            + "<td>" + rsLogon.getDate("date") + "</td>"
-                            + "<td>" + rsLogon.getTime("time") + "</td>";
-                    tmp += "</tr>";
+                    if(rsLogon.getString("user").equals(username)) {
+                        tmp += "<tr ondblclick=\"dbclickReturnMaterial(\'"
+                                + rsLogon.getString("name")+"\')\">"
+                                + "<td>" + rsLogon.getString("name") + "</td>"
+                                + "<td>" + rsLogon.getString("user") + "</td>"
+                                + "<td>" + rsLogon.getDate("date") + "</td>"
+                                + "<td>" + rsLogon.getTime("time") + "</td>";
+                        tmp += "</tr>";
+                    }
                 }
                 tmp += "</table>";
 //            } else {

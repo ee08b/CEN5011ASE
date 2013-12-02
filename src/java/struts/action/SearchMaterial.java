@@ -90,7 +90,7 @@ public class SearchMaterial extends HttpServlet {
             System.out.println("search material: "+tmp);
             
             ShowAll sa = new ShowAll();
-            sa.showAllMaterialOut();
+            sa.showAllMaterialOut((String)session.getAttribute("username"));
             sa.showAllMaterial();
             getServletContext().getRequestDispatcher(
                     "/panel.jsp").forward(request, response);     

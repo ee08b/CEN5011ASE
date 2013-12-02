@@ -52,7 +52,11 @@
     <servlet>
         <servlet-name>MaterialAmount</servlet-name>
         <servlet-class>struts.action.MaterialAmount</servlet-class>
-    </servlet>    
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>struts.action.Logout</servlet-class>
+    </servlet> 
     <servlet>
         <servlet-name>NewMaterial</servlet-name>
         <servlet-class>struts.action.NewMaterial</servlet-class>
@@ -100,7 +104,11 @@
     <servlet-mapping>
         <servlet-name>AddRoomRsv</servlet-name>
         <url-pattern>/AddRoomRsv</url-pattern>
-    </servlet-mapping>          
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
