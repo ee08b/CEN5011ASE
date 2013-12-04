@@ -11,6 +11,16 @@
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+        
+        <style type="text/css">
+            body {
+                background-image: url("images/gl_night.jpg");
+                background-color: black;
+                background-position: 0% 0%;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+        </style>
 	</head>
 	
 	<body>

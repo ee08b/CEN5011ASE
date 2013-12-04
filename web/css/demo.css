@@ -22,18 +22,21 @@ table {
 	border-collapse:collapse;
 	border-spacing:0;
 }
+/* itemContent .table .th{
+    font-style: normal;
+    color: #66ffff;
+    background-color:grey;
+	border-spacing:0;
+} */
 fieldset,img { 
 	border:0;
 }
-address,caption,cite,code,dfn,th,var {
+address,caption,cite,code,dfn,var {
 	font-style:normal;
 	font-weight:normal;
 }
 ol,ul {
 	list-style:none;
-}
-caption,th {
-	text-align:left;
 }
 h1,h2,h3,h4,h5,h6 {
 	font-size:100%;

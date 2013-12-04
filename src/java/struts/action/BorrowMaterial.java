@@ -43,7 +43,7 @@ public class BorrowMaterial extends HttpServlet {
         String[][] para0 = new String[][]{
     		new String[]{"name", "'"+name+"'"}
         };
-        String results = "available = available - 1";
+        String results = "available = available - 1, hit = hit + 1";
         ResultSet rsLogon = dbmr.search("material", para0);
         
         ResultSet rsLogon1 = dbmr.search("material_rsv", para0);
@@ -56,7 +56,7 @@ public class BorrowMaterial extends HttpServlet {
                 String[][] para1 = new String[][]{
                     new String[]{"name", "'"+name+"'"},
                 };
-                dbmr.update("material", para1, results);                
+                dbmr.update("material", para1, results);
                 
                 String[][] para = new String[][]{
                     new String[]{"name", "'"+name+"'"},

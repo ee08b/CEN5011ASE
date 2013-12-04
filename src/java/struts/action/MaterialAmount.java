@@ -49,7 +49,7 @@ public class MaterialAmount extends HttpServlet {
         ResultSet rsLogon;
         try{
             if(type.equals("increase")){
-                results = "amount = amount + 1";
+                results = "amount = amount + 1, available = available + 1";
                 dbmr.update("material", para0, results);
                 System.out.println("increase material "+id+" successful");
             } else if(type.equals("reduce")){
@@ -72,12 +72,17 @@ public class MaterialAmount extends HttpServlet {
 //                            dbmr.delete("material", para0);
 //                            System.out.println("material "+id+" delete successful");
 //                        } else {
-                            results = "amount = amount - 1";
+                            results = "amount = amount - 1, available = available - 1";
                             dbmr.update("material", para0, results);
                             
                             rsLogon = dbmr.search("material", para0);
-                            if(rsLogon.next() && rsLogon.getInt("amount") < 0) {
-                                dbmr.delete("material", para0);
+                            if(rsLogon.next() && rsLogon.getInt("available") < 0){
+                                if(rsLogon.getInt("amount") < 0) {
+                                        dbmr.delete("material", para0);
+                                }else {
+                                    results = "amount = amount + 1, available = available + 1";
+                                    dbmr.update("material", para0, results);
+                                }
                             }
 //                            System.out.println("material "+id+" has "+rsLogon.getInt("amount")
 //                                                +", reduced successful");

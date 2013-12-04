@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="css/17.css" />
 	<link rel="stylesheet" type="text/css" href="css/dropdown-list.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     
 	<script language="javascript" src="js/toggleCollapseExpand.js" ></script>
     <script language="javascript" src="js/dbclick.js" ></script>
@@ -163,7 +163,7 @@
                 <input id="numbersignup" name="numbersignup" required="required" type="text" placeholder="amount" />
 
                 <input type="submit" value="Add Material"/>&nbsp;&nbsp;&nbsp;
-                <span style="font-style: color:grey">Click to add 1, double-click to reduce 1</span>
+                <span style="color:grey">(Click to add 1, double-click to reduce 1)</span>
             </form>
             <%String showAllMaterial = (String) session.getAttribute("showAllMaterial");%> 
             <%=showAllMaterial%>

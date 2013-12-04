@@ -27,12 +27,18 @@ public class ShowAll {
     	ResultSet rsLogon = dbmr.display("log");
         try {
             String tmp = "<table border=0 width=100%><tr>"
-                    + "<td>user</td>"
-                    + "<td>name</td>"
-                    + "<td>type</td>"
-                    + "<td>action</td>"
-                    + "<td>date</td>"
-                    + "<td>time</td>"
+                    + "<th>user</th>"
+                    + "<th>name</th>"
+                    + "<th>type</th>"
+                    + "<th>action</th>"
+                    + "<th>date</th>"
+                    + "<th>time</th>"
+//                    + "<td>user</td>"
+//                    + "<td>name</td>"
+//                    + "<td>type</td>"
+//                    + "<td>action</td>"
+//                    + "<td>date</td>"
+//                    + "<td>time</td>"
                     + "</tr>";
             while (rsLogon.next()){
                 tmp += "<tr>";
@@ -64,9 +70,12 @@ public class ShowAll {
     	ResultSet rsLogon = dbmr.display("account");
         try {
             String tmp = "<table border=0 width=100%><tr>"
-                    + "<td>username</td>"
-                    + "<td>password</td>"
-                    + "<td>role</td>"
+                    + "<th>username</th>"
+                    + "<th>password</th>"
+                    + "<th>role</th>"
+//                    + "<td>username</td>"
+//                    + "<td>password</td>"
+//                    + "<td>role</td>"
                     + "</tr>";
             while (rsLogon.next()){
                 tmp += "<tr ondblclick=\"dbclickDeleteUser(\'"
@@ -94,11 +103,16 @@ public class ShowAll {
     	ResultSet rsLogon = dbmr.display("room_rsv");
         try {
             String tmp = "<table border=0 width=100%><tr>"
-                    + "<td>room</td>"
-                    + "<td>user</td>"
-                    + "<td>date</td>"
-                    + "<td>from</td>"
-                    + "<td>to</td>"
+                    + "<th>room</th>"
+                    + "<th>user</th>"
+                    + "<th>date</th>"
+                    + "<th>from</th>"
+                    + "<th>to</th>"
+//                    + "<td>room</td>"
+//                    + "<td>user</td>"
+//                    + "<td>date</td>"
+//                    + "<td>from</td>"
+//                    + "<td>to</td>"
                     + "</tr>";
             while (rsLogon.next()){
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -133,10 +147,14 @@ public class ShowAll {
         
         try {
             String tmp = "<table border=0 width=100%><tr>"
-                    + "<td>name</td>"
-                    + "<td>user</td>"
-                    + "<td>date</td>"
-                    + "<td>time</td>"
+                        + "<th>name</th>"
+                        + "<th>user</th>"
+                        + "<th>date</th>"
+                        + "<th>time</th>"
+//                    + "<td>name</td>"
+//                    + "<td>user</td>"
+//                    + "<td>date</td>"
+//                    + "<td>time</td>"
                     + "</tr>";
 //            if(rsLogon.first()) {
                 while (rsLogon.next()) {
@@ -171,12 +189,18 @@ public class ShowAll {
     	ResultSet rsLogon = dbmr.display("material");
         try {
             String tmp = "<table border=0 width=100%><tr>"
-                    + "<td>name</td>"
-                    + "<td>author</td>"
-                    + "<td>type</td>"
-                    + "<td>ISBN</td>"
-                    + "<td>available</td>"
-                    + "<td>amount</td>"
+                    + "<th>name</th>"
+                    + "<th>author</th>"
+                    + "<th>type</th>"
+                    + "<th>ISBN</th>"
+                    + "<th>available</th>"
+                    + "<th>amount</th>"
+//                    + "<td>name</td>"
+//                    + "<td>author</td>"
+//                    + "<td>type</td>"
+//                    + "<td>ISBN</td>"
+//                    + "<td>available</td>"
+//                    + "<td>amount</td>"
                     + "</tr>";
             while (rsLogon.next()){
                 String tmp0 = "<tr ondblclick=\"dbclickReduceMaterial(\'" 
